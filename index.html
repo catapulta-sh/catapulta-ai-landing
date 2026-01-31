@@ -105,6 +105,33 @@
         }
 
         /* GitHub-style contribution grid */
+        .productivity-section {
+            position: relative;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .productivity-arrow {
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .productivity-arrow svg {
+            width: 150px;
+            height: 100px;
+        }
+
+        .productivity-text {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
         .contribution-grid {
             position: relative;
             z-index: 5;
@@ -113,7 +140,7 @@
             gap: 4px;
             padding: 0.5rem;
             max-width: 90%;
-            margin: 0 auto 4rem auto;
+            margin: 0 auto;
             justify-content: center;
             height: 150px;
         }
@@ -782,9 +809,20 @@
             .packages-grid {
                 grid-template-columns: 1fr;
             }
+
+            .productivity-arrow {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
+            .productivity-section {
+                padding: 4rem 0;
+            }
+
+            .productivity-arrow {
+                display: none;
+            }
             header {
                 padding: 1.5rem 1.5rem;
                 gap: 1.5rem;
@@ -982,7 +1020,6 @@
             <p class="subtitle">
                 Your intelligent automation partner, ready in minutes.
             </p>
-            <div class="contribution-grid" id="contributionGrid"></div>
             <p class="description">
                 Unlock the power of open-source AI agents. Automate tasks, streamline workflows, and bring business intelligence directly into your favorite chat platforms — no coding required.
             </p>
@@ -1172,6 +1209,22 @@
                     </a>
                 </div>
             </div>
+        </section>
+
+        <!-- Productivity Grid Section -->
+        <section class="productivity-section">
+            <div class="productivity-arrow">
+                <div class="productivity-text">Your productivity</div>
+                <svg viewBox="0 0 150 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 10 20 Q 80 10, 120 50" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#10b981" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+            <div class="contribution-grid" id="contributionGrid"></div>
         </section>
 
         <!-- FAQ section -->
@@ -1409,7 +1462,7 @@
                             this.fadeOutAndRestart();
                         }, 1500);
                     }
-                }, 1000); // New box every second
+                }, 500); // New box every half second (2x faster)
             }
 
             fadeOutAndRestart() {
