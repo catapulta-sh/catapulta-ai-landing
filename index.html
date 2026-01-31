@@ -1604,7 +1604,12 @@
         const botAvatar = document.querySelector('.chat-bot-avatar');
         let hideTimeout;
 
-        function hideAndShowAvatar() {
+        function hideAndShowAvatar(e) {
+            // Prevent default touch behavior
+            if (e.type === 'touchstart') {
+                e.preventDefault();
+            }
+
             // Clear any existing timeout
             clearTimeout(hideTimeout);
 
@@ -1617,9 +1622,17 @@
             }, 2000);
         }
 
-        // Add event listeners for hover and click
-        botAvatar.addEventListener('mouseenter', hideAndShowAvatar);
-        botAvatar.addEventListener('click', hideAndShowAvatar);
+        // Check if device supports touch
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (isTouchDevice) {
+            // Mobile: use touch events
+            botAvatar.addEventListener('touchstart', hideAndShowAvatar);
+        } else {
+            // Desktop: use hover and click
+            botAvatar.addEventListener('mouseenter', hideAndShowAvatar);
+            botAvatar.addEventListener('click', hideAndShowAvatar);
+        }
     </script>
 </body>
 </html>
