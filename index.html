@@ -393,8 +393,9 @@
         }
 
         .chat-bot-avatar.hiding {
-            transform: translateY(150px);
-            opacity: 0;
+            transform: translateY(150px) !important;
+            opacity: 0 !important;
+            transition: all 0.6s var(--ease-smooth) !important;
         }
 
         .chat-bot-avatar img {
