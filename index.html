@@ -378,6 +378,8 @@
             transform: translateY(150px);
             transition: all 0.6s var(--ease-smooth);
             cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
             animation: avatarAppear 0.8s var(--ease-bounce) 2s forwards;
         }
 
@@ -1605,11 +1607,6 @@
         let hideTimeout;
 
         function hideAndShowAvatar(e) {
-            // Prevent default touch behavior
-            if (e.type === 'touchstart') {
-                e.preventDefault();
-            }
-
             // Clear any existing timeout
             clearTimeout(hideTimeout);
 
@@ -1622,16 +1619,12 @@
             }, 2000);
         }
 
-        // Check if device supports touch
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        // Add click for both mobile and desktop
+        botAvatar.addEventListener('click', hideAndShowAvatar);
 
-        if (isTouchDevice) {
-            // Mobile: use touch events
-            botAvatar.addEventListener('touchstart', hideAndShowAvatar);
-        } else {
-            // Desktop: use hover and click
+        // Add hover only for non-touch devices
+        if (!('ontouchstart' in window)) {
             botAvatar.addEventListener('mouseenter', hideAndShowAvatar);
-            botAvatar.addEventListener('click', hideAndShowAvatar);
         }
     </script>
 </body>
