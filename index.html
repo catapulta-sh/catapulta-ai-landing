@@ -403,6 +403,24 @@
             object-fit: contain;
         }
 
+        .chat-bot-clickzone {
+            position: absolute;
+            top: -40px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            z-index: 1000;
+            cursor: pointer;
+            opacity: 0;
+            animation: clickzoneAppear 0.1s linear 2.8s forwards;
+        }
+
+        @keyframes clickzoneAppear {
+            to {
+                opacity: 0.01;
+            }
+        }
+
         .chat-platforms {
             display: flex;
             justify-content: center;
@@ -1088,6 +1106,9 @@
                     <img src="openclaw.png" alt="AI Agent">
                 </div>
 
+                <!-- Invisible Click Zone -->
+                <div class="chat-bot-clickzone"></div>
+
                 <!-- Platform Icons -->
                 <div class="chat-platforms">
                     <!-- WhatsApp -->
@@ -1618,6 +1639,7 @@
 
         // Bot avatar hide/show interaction
         const botAvatar = document.querySelector('.chat-bot-avatar');
+        const botClickZone = document.querySelector('.chat-bot-clickzone');
         let hideTimeout;
 
         function hideAndShowAvatar(e) {
@@ -1633,12 +1655,12 @@
             }, 2000);
         }
 
-        // Add click for both mobile and desktop
-        botAvatar.addEventListener('click', hideAndShowAvatar);
+        // Add click to the invisible clickzone
+        botClickZone.addEventListener('click', hideAndShowAvatar);
 
         // Add hover only for non-touch devices
         if (!('ontouchstart' in window)) {
-            botAvatar.addEventListener('mouseenter', hideAndShowAvatar);
+            botClickZone.addEventListener('mouseenter', hideAndShowAvatar);
         }
     </script>
 </body>
