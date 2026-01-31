@@ -393,10 +393,14 @@
         }
 
         .chat-bot-avatar.hiding {
-            animation: none !important;
-            transform: translateY(150px) !important;
-            opacity: 0 !important;
-            transition: all 0.6s var(--ease-smooth) !important;
+            animation: avatarHide 0.8s var(--ease-bounce) forwards !important;
+        }
+
+        @keyframes avatarHide {
+            to {
+                transform: translateY(200px);
+                opacity: 0;
+            }
         }
 
         .chat-bot-avatar img {
@@ -1651,10 +1655,10 @@
             // Add hiding class
             botAvatar.classList.add('hiding');
 
-            // Remove hiding class after 2 seconds to bring it back
+            // Remove hiding class after 3 seconds to bring it back
             hideTimeout = setTimeout(() => {
                 botAvatar.classList.remove('hiding');
-            }, 2000);
+            }, 3000);
         }
 
         // Add click to the invisible clickzone
