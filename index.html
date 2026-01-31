@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catapulta - OpenClaw AI Agent Installations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #f0fdf6;
+            --color-surface: #ffffff;
+            --color-surface-elevated: #e8fcf3;
+            --color-primary: #10b981;
+            --color-primary-dim: #059669;
+            --color-secondary: #14b8a6;
+            --color-accent: #34d399;
+            --color-text: #064e3b;
+            --color-text-dim: #047857;
+            --color-border: #d1fae5;
+
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--color-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.4;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Gradient orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.08;
+            z-index: 0;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .bg-orb-1 {
+            width: 700px;
+            height: 700px;
+            background: var(--color-primary);
+            top: -250px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb-2 {
+            width: 600px;
+            height: 600px;
+            background: var(--color-secondary);
+            bottom: -200px;
+            left: -200px;
+            animation-delay: 5s;
+        }
+
+        .bg-orb-3 {
+            width: 500px;
+            height: 500px;
+            background: var(--color-accent);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* GitHub-style contribution grid */
+        .contribution-grid {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: 2rem;
+            z-index: 5;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 14px);
+            gap: 4px;
+            padding: 0.5rem;
+            max-width: 90%;
+            justify-content: center;
+        }
+
+        .contribution-box {
+            width: 14px;
+            height: 14px;
+            background: #d1fae5;
+            border-radius: 2px;
+            transition: all 0.6s var(--ease-smooth);
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .contribution-box.appear {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .contribution-box.level-1 {
+            background: #a7f3d0;
+        }
+
+        .contribution-box.level-2 {
+            background: #6ee7b7;
+        }
+
+        .contribution-box.level-3 {
+            background: #34d399;
+        }
+
+        .contribution-box.level-4 {
+            background: #10b981;
+        }
+
+        .contribution-grid.fade-out {
+            animation: gridFadeOut 1s var(--ease-smooth) forwards;
+        }
+
+        @keyframes gridFadeOut {
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+        }
+
+        /* Mobile responsive grid */
+        @media (max-width: 768px) {
+            .contribution-grid {
+                grid-template-columns: repeat(auto-fit, 12px);
+                gap: 3px;
+                padding: 0.5rem;
+            }
+
+            .contribution-box {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contribution-grid {
+                grid-template-columns: repeat(auto-fit, 10px);
+                gap: 2px;
+                padding: 0.5rem;
+            }
+
+            .contribution-box {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+            animation: slideDown 0.8s var(--ease-smooth);
+            gap: 3rem;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            height: 40px;
+            transition: transform 0.3s var(--ease-smooth);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.625rem 1.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35);
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main container */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        /* Hero section */
+        .hero {
+            padding: 6rem 0 8rem;
+            text-align: center;
+            animation: fadeInUp 1s var(--ease-smooth) 0.2s backwards;
+            position: relative;
+            min-height: 400px;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s var(--ease-smooth) 0.3s backwards;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            color: var(--color-text-dim);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-weight: 400;
+            animation: fadeInUp 1s var(--ease-smooth) 0.4s backwards;
+        }
+
+        .hero .description {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--color-text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            animation: fadeInUp 1s var(--ease-smooth) 0.5s backwards;
+            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.06);
+        }
+
+        /* Chat Animation Section */
+        .chat-demo {
+            padding: 4rem 0 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s var(--ease-smooth) 0.6s backwards;
+        }
+
+        .chat-window {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+            border: 1px solid var(--color-border);
+            min-height: 200px;
+            position: relative;
+        }
+
+        .chat-conversation {
+            display: none;
+            animation: chatFadeIn 0.6s var(--ease-smooth);
+        }
+
+        .chat-conversation.active {
+            display: block;
+        }
+
+        @keyframes chatFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+        }
+
+        .chat-message.user {
+            text-align: right;
+        }
+
+        .chat-message.bot {
+            text-align: left;
+        }
+
+        .chat-conversation.active .chat-message.user {
+            animation: messagePop 0.5s var(--ease-bounce);
+        }
+
+        .chat-conversation.active .chat-message.bot {
+            animation: messagePop 0.5s var(--ease-bounce) 0.3s;
+            animation-fill-mode: backwards;
+        }
+
+        @keyframes messagePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .chat-bubble {
+            display: inline-block;
+            padding: 0.875rem 1.25rem;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: var(--color-primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.bot .chat-bubble {
+            background: #ecfdf5;
+            color: var(--color-text);
+            border-bottom-left-radius: 4px;
+            border: 1px solid #d1fae5;
+        }
+
+        .chat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-dim);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Packages section */
+        .packages {
+            padding: 4rem 0 8rem;
+            animation: fadeInUp 1s var(--ease-smooth) 0.6s backwards;
+        }
+
+        .packages h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .packages h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            margin: 1.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .package-card {
+            background: var(--color-surface);
+            border: 3px solid var(--color-border);
+            border-radius: 32px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--ease-smooth);
+            animation: fadeInUp 1s var(--ease-smooth) backwards;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .package-card:nth-child(1) {
+            animation-delay: 0.7s;
+            transform: rotate(-1deg);
+        }
+
+        .package-card:nth-child(2) {
+            animation-delay: 0.85s;
+            transform: rotate(1deg);
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #d1fae5, #e0f2fe, #f0fdfa, #ecfdf5);
+            border-radius: 32px;
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-smooth);
+            z-index: -1;
+        }
+
+        .package-card:hover::before {
+            opacity: 1;
+        }
+
+        .package-card:hover {
+            transform: translateY(-12px) rotate(0deg) scale(1.02);
+            border-color: transparent;
+            box-shadow: 0 25px 60px rgba(16, 185, 129, 0.2);
+        }
+
+        .package-card .badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.625rem 1.25rem;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .package-card.premium .badge {
+            background: var(--color-secondary);
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+        }
+
+        .package-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .package-card .price {
+            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .package-card.premium .price {
+            color: var(--color-secondary);
+        }
+
+        .package-card .price-note {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .package-card .features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .package-card .features li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--color-text-dim);
+            line-height: 1.6;
+        }
+
+        .package-card .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .package-card.premium .features li::before {
+            color: var(--color-secondary);
+        }
+
+        .package-card .card-cta {
+            width: 100%;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.125rem;
+            padding: 1.125rem 2rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25);
+        }
+
+        .package-card.premium .card-cta {
+            background: var(--color-secondary);
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.25);
+        }
+
+        .package-card .card-cta:hover {
+            background: var(--color-primary-dim);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .package-card.premium .card-cta:hover {
+            background: #0f9488;
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.4);
+        }
+
+        /* Book a Call CTA Section */
+        .book-call-cta {
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .book-call-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-call-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="1" cy="1" r="1" fill="white" opacity="0.1"/></svg>');
+            background-size: 30px 30px;
+        }
+
+        .book-call-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-call-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .book-call-content p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+
+        .book-call-button {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            padding: 1.25rem 3rem;
+            background: white;
+            color: var(--color-primary);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-call-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 0 8rem;
+            animation: fadeInUp 1s var(--ease-smooth) 1s backwards;
+        }
+
+        .faq h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .faq h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            margin: 1.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .faq-grid {
+            display: grid;
+            gap: 2.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.3s var(--ease-smooth);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .faq-item:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .faq-item h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .faq-item h3::before {
+            content: '?';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            color: white;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .faq-item p {
+            color: var(--color-text-dim);
+            line-height: 1.8;
+            font-size: 1.125rem;
+        }
+
+        .faq-item strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            padding: 4rem;
+            text-align: center;
+            color: var(--color-text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s var(--ease-smooth);
+        }
+
+        footer a:hover {
+            color: var(--color-primary-dim);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .logo {
+                height: 32px;
+            }
+
+            .cta-button {
+                font-size: 0.85rem;
+                padding: 0.5rem 1.25rem;
+            }
+
+            main {
+                padding: 0 1.5rem;
+            }
+
+            .hero {
+                padding: 3rem 0 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.125rem;
+            }
+
+            .hero .description {
+                padding: 1.25rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .package-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .packages-grid {
+                gap: 2rem;
+            }
+
+            .packages h2,
+            .faq h2 {
+                font-size: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .faq {
+                padding: 4rem 0 6rem;
+            }
+
+            .faq-item {
+                padding: 1.75rem 1.5rem;
+            }
+
+            .faq-item h3 {
+                font-size: 1.25rem;
+            }
+
+            .faq-item h3::before {
+                width: 32px;
+                height: 32px;
+                font-size: 1.125rem;
+            }
+
+            .faq-item p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1.25rem 1rem;
+                gap: 1rem;
+            }
+
+            .logo {
+                height: 28px;
+            }
+
+            .cta-button {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+
+            main {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 2rem 0 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .description {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .package-card {
+                padding: 1.5rem 1.25rem;
+                border-radius: 24px;
+            }
+
+            .package-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .package-card .price {
+                font-size: 2.5rem;
+            }
+
+            .faq-item {
+                padding: 1.5rem 1.25rem;
+                border-radius: 20px;
+            }
+
+            .faq-item h3 {
+                font-size: 1.125rem;
+                gap: 0.5rem;
+            }
+
+            .faq-item p {
+                font-size: 0.95rem;
+            }
+
+            .chat-demo {
+                padding: 3rem 0 1.5rem;
+            }
+
+            .chat-window {
+                padding: 1.5rem;
+            }
+
+            .chat-bubble {
+                font-size: 0.9rem;
+                padding: 0.75rem 1rem;
+                max-width: 85%;
+            }
+
+            .book-call-cta {
+                padding: 4rem 0;
+            }
+
+            .book-call-container {
+                padding: 3rem 2rem;
+                border-radius: 24px;
+            }
+
+            .book-call-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .book-call-content p {
+                font-size: 1.125rem;
+            }
+
+            .book-call-button {
+                font-size: 1.125rem;
+                padding: 1.125rem 2.5rem;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <!-- Header -->
+    <header>
+        <img src="horizontal-logo-black.svg" alt="Catapulta" class="logo">
+        <button class="cta-button" onclick="scrollToPackages()">
+            <span>Get Started</span>
+        </button>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <!-- Hero section -->
+        <section class="hero">
+            <div class="contribution-grid" id="contributionGrid"></div>
+            <h1>Launch Your AI Agent</h1>
+            <p class="subtitle">
+                Your intelligent automation partner, ready in minutes.
+            </p>
+            <p class="description">
+                Unlock the power of open-source AI agents. Automate tasks, streamline workflows, and bring business intelligence directly into your favorite chat platforms — no coding required.
+            </p>
+        </section>
+
+        <!-- Chat Demo Section -->
+        <section class="chat-demo">
+            <div class="chat-window" id="chatWindow">
+                <!-- Conversation 1 -->
+                <div class="chat-conversation active">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Create a video ad about my tea house</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">I'll create a 30-second video ad highlighting your tea house ambiance and specialty teas. Should be ready in 2 hours! 🍵</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 2 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Order 23 pallets of wood for me</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Order placed with TimberCo! 23 pallets scheduled for delivery Thursday. Confirmation #TM-8829 📦</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 3 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">List the new roasted coffee beans for $29</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Done! "Colombian Dark Roast" is now live on your shop at $29. Updated inventory and sent to your email list ☕</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 4 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">How many leads we got this week?</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">This week: 47 new leads! Up 23% from last week. Top source: Instagram ads. Full report sent to your email 📊</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 5 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Send invoice to the Wilson account</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Invoice #INV-2847 sent to Wilson Corp ($3,450). Payment link included, due in 30 days 💼</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 6 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Schedule social posts for next week</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">7 posts scheduled across Instagram, LinkedIn, and Twitter. Preview sent to your email. Goes live Monday! 📱</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 7 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">What's our inventory status on blue widgets?</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Blue widgets: 127 units in stock. 34 sold this month. Reorder suggested in 2 weeks based on current velocity 📈</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 8 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Summarize yesterday's customer feedback</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Yesterday: 12 reviews (avg 4.6⭐). Top praise: fast shipping. One complaint about packaging - flagged for team review 📝</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 9 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Book a meeting room for Friday 2pm</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Conference Room B booked for Friday 2-3pm. Calendar invites sent to your team. Coffee and snacks ordered 🗓️</div>
+                    </div>
+                </div>
+
+                <!-- Conversation 10 -->
+                <div class="chat-conversation">
+                    <div class="chat-message user">
+                        <div class="chat-label">You</div>
+                        <div class="chat-bubble">Track package #TRK-8847</div>
+                    </div>
+                    <div class="chat-message bot">
+                        <div class="chat-label">AI Agent</div>
+                        <div class="chat-bubble">Package #TRK-8847 is in transit - arrives tomorrow by 5pm. Currently in Seattle. I'll notify you when delivered! 📦</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages section -->
+        <section class="packages" id="packages">
+            <h2>Choose Your Package</h2>
+
+            <div class="packages-grid">
+                <!-- Package 1: Install -->
+                <div class="package-card">
+                    <span class="badge">Quick Start</span>
+                    <h3>Install Your AI Agent</h3>
+                    <div class="price">€149</div>
+                    <div class="price-note">one-time payment</div>
+
+                    <ul class="features">
+                        <li>Complete installation and setup of OpenClaw AI Agent - we handle everything and guide you</li>
+                        <li>No coding required, ready to use immediately</li>
+                        <li>Connect to WhatsApp, Telegram, or Slack</li>
+                        <li>Automate tasks and streamline your workflow</li>
+                        <li>3 months of dedicated support included</li>
+                    </ul>
+
+                    <button class="card-cta" onclick="handleGetStarted('install')">
+                        Get Started →
+                    </button>
+                </div>
+
+                <!-- Package 2: Custom Integration -->
+                <div class="package-card premium">
+                    <span class="badge">Enterprise</span>
+                    <h3>Custom Integration</h3>
+                    <div class="price">€499+</div>
+                    <div class="price-note">starting from</div>
+
+                    <ul class="features">
+                        <li>Integrate your business software seamlessly</li>
+                        <li>Custom plugin development tailored to your needs</li>
+                        <li>Delivered in just one week</li>
+                        <li>Business intelligence directly in your chat</li>
+                        <li>Dedicated development team at your service</li>
+                    </ul>
+
+                    <button class="card-cta" onclick="handleGetStarted('custom')">
+                        Let's Talk →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book a Call CTA -->
+        <section class="book-call-cta">
+            <div class="book-call-container">
+                <div class="book-call-content">
+                    <h2>Ready to Get Started?</h2>
+                    <p>No compromise. Let's discuss your automation needs.</p>
+                    <a href="https://cal.com/catapulta/30min" target="_blank" rel="noopener noreferrer" class="book-call-button">
+                        Book a Call →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ section -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is OpenClaw?</h3>
+                    <p>
+                        <strong>OpenClaw</strong> is an open-source AI agent framework that brings intelligent automation to your fingertips.
+                        It's designed to integrate seamlessly with your existing workflows — a powerful assistant that lives in your chat apps
+                        (WhatsApp, Telegram, Slack) and can automate repetitive tasks, answer questions, process data, and much more —
+                        all without requiring you to write a single line of code.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How can I automate my business?</h3>
+                    <p>
+                        The possibilities are nearly endless! Our AI agents excel at automating workflows across various industries:
+                        <strong>video production</strong> (content scheduling, rendering management, metadata tagging),
+                        <strong>corporate operations</strong> (meeting summaries, document processing, CRM updates),
+                        <strong>digital shops</strong> (inventory tracking, customer support, order status notifications),
+                        and more. We analyze your specific needs and build custom integrations that transform how you work —
+                        bringing business intelligence and automation directly into your everyday chat environment.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I call my agent with voice?</h3>
+                    <p>
+                        <strong>Yes!</strong> Voice interaction is available for your AI agent. You can speak to your agent naturally,
+                        just like you would with a colleague. However, please note that voice features incur additional charges
+                        based on usage (minutes of voice processing). We'll provide transparent pricing details when setting up
+                        voice capabilities for your specific use case.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Catapulta. Powered by <a href="https://github.com/cagostino/openClaw" target="_blank" rel="noopener noreferrer">OpenClaw</a> open-source AI agents.</p>
+        <p style="margin-top: 0.5rem;">Contact: <a href="mailto:david@catapulta.sh">david@catapulta.sh</a></p>
+    </footer>
+
+    <script>
+        // Smooth scroll to packages
+        function scrollToPackages() {
+            document.getElementById('packages').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Handle CTA clicks
+        function handleGetStarted(packageType) {
+            // You can replace this with actual contact form or booking logic
+            if (packageType === 'install') {
+                alert('Great choice! We\'ll set up your AI agent. Contact us to get started.');
+            } else {
+                alert('Let\'s build something amazing together! Contact us to discuss your custom integration.');
+            }
+            // Example: window.location.href = 'mailto:hello@catapulta.io?subject=OpenClaw ' + packageType;
+        }
+
+        // Add parallax effect to orbs on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.bg-orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 20;
+                const xMove = (x - 0.5) * speed;
+                const yMove = (y - 0.5) * speed;
+                orb.style.transform = `translate(${xMove}px, ${yMove}px)`;
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all package cards
+        document.querySelectorAll('.package-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // GitHub-style contribution grid animation
+        class ContributionGrid {
+            constructor() {
+                this.grid = document.getElementById('contributionGrid');
+                this.boxes = [];
+                this.currentIndex = 0;
+                this.maxBoxes = this.calculateMaxBoxes();
+                this.animationInterval = null;
+
+                this.init();
+            }
+
+            calculateMaxBoxes() {
+                // Mobile first: calculate based on screen size
+                const screenWidth = window.innerWidth;
+                let cols, rows;
+
+                if (screenWidth <= 480) {
+                    cols = 15;
+                    rows = 6;
+                } else if (screenWidth <= 768) {
+                    cols = 20;
+                    rows = 6;
+                } else {
+                    cols = 30;
+                    rows = 6;
+                }
+
+                this.cols = cols;
+                this.rows = rows;
+                return cols * rows;
+            }
+
+            init() {
+                this.createBoxes();
+                this.prefillRows(3);
+                this.startAnimation();
+
+                // Handle window resize
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        this.reset();
+                    }, 250);
+                });
+            }
+
+            createBoxes() {
+                this.grid.innerHTML = '';
+                this.boxes = [];
+
+                for (let i = 0; i < this.maxBoxes; i++) {
+                    const box = document.createElement('div');
+                    box.className = 'contribution-box';
+                    this.grid.appendChild(box);
+                    this.boxes.push(box);
+                }
+            }
+
+            prefillRows(numRows) {
+                const boxesToFill = this.cols * numRows;
+
+                for (let i = 0; i < boxesToFill && i < this.boxes.length; i++) {
+                    const box = this.boxes[i];
+
+                    // Instantly show with random green levels
+                    const levels = ['level-2', 'level-3', 'level-4'];
+                    const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+
+                    box.classList.add('appear', randomLevel);
+                    box.style.transition = 'none';
+                }
+
+                // Set current index to start after prefilled boxes
+                this.currentIndex = boxesToFill;
+            }
+
+            animateBox(index) {
+                if (index >= this.boxes.length) return;
+
+                const box = this.boxes[index];
+
+                // Appear animation
+                setTimeout(() => {
+                    box.classList.add('appear');
+                }, 50);
+
+                // Level 1 (light green)
+                setTimeout(() => {
+                    box.classList.add('level-1');
+                }, 200);
+
+                // Level 2 (medium green)
+                setTimeout(() => {
+                    box.classList.remove('level-1');
+                    box.classList.add('level-2');
+                }, 400);
+
+                // Level 3 or 4 (dark green) - randomize for variety
+                setTimeout(() => {
+                    box.classList.remove('level-2');
+                    const level = Math.random() > 0.5 ? 'level-3' : 'level-4';
+                    box.classList.add(level);
+                }, 600);
+            }
+
+            startAnimation() {
+                // currentIndex already set by prefillRows, don't reset it
+
+                this.animationInterval = setInterval(() => {
+                    if (this.currentIndex < this.boxes.length) {
+                        this.animateBox(this.currentIndex);
+                        this.currentIndex++;
+                    } else {
+                        // All boxes filled, fade out and restart
+                        clearInterval(this.animationInterval);
+                        setTimeout(() => {
+                            this.fadeOutAndRestart();
+                        }, 1500);
+                    }
+                }, 1000); // New box every second
+            }
+
+            fadeOutAndRestart() {
+                this.grid.classList.add('fade-out');
+
+                setTimeout(() => {
+                    this.grid.classList.remove('fade-out');
+                    this.reset();
+                }, 1000);
+            }
+
+            reset() {
+                clearInterval(this.animationInterval);
+                this.maxBoxes = this.calculateMaxBoxes();
+                this.createBoxes();
+                this.prefillRows(3);
+                this.startAnimation();
+            }
+        }
+
+        // Initialize contribution grid animation
+        const contributionGrid = new ContributionGrid();
+
+        // Chat conversation cycling
+        class ChatDemo {
+            constructor() {
+                this.conversations = document.querySelectorAll('.chat-conversation');
+                this.currentIndex = 0;
+                this.interval = 5000; // 5 seconds per conversation
+
+                this.start();
+            }
+
+            start() {
+                setInterval(() => {
+                    this.nextConversation();
+                }, this.interval);
+            }
+
+            nextConversation() {
+                // Hide current
+                this.conversations[this.currentIndex].classList.remove('active');
+
+                // Move to next
+                this.currentIndex = (this.currentIndex + 1) % this.conversations.length;
+
+                // Show next
+                this.conversations[this.currentIndex].classList.add('active');
+            }
+        }
+
+        // Initialize chat demo
+        const chatDemo = new ChatDemo();
+    </script>
+</body>
+</html>
