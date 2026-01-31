@@ -365,6 +365,7 @@
             border: 1px solid var(--color-border);
             min-height: 200px;
             position: relative;
+            overflow: visible;
         }
 
         .chat-bot-avatar {
@@ -373,13 +374,14 @@
             right: 20px;
             width: 80px;
             height: 80px;
-            z-index: 10;
+            z-index: 1000;
             opacity: 0;
             transform: translateY(150px);
             transition: all 0.6s var(--ease-smooth);
             cursor: pointer;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            pointer-events: auto;
             animation: avatarAppear 0.8s var(--ease-bounce) 2s forwards;
         }
 
