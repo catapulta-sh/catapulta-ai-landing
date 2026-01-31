@@ -719,6 +719,84 @@
             box-shadow: 0 10px 30px rgba(20, 184, 166, 0.4);
         }
 
+        /* Installation Animation */
+        .install-animation {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .install-folder {
+            width: 140px;
+            height: 120px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .install-folder::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            width: 60px;
+            height: 12px;
+            background: linear-gradient(135deg, #bfdbfe 0%, #dbeafe 100%);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .install-bot {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 20px;
+            right: -80px;
+            background: white;
+            border-radius: 14px;
+            padding: 8px;
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+            border: 2px solid var(--color-primary);
+            animation: botSlideIn 2.5s var(--ease-bounce) infinite;
+        }
+
+        .install-bot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @keyframes botSlideIn {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(-120px, 20px) scale(0.8);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-120px, 20px) scale(0.6);
+                opacity: 0.3;
+            }
+            60% {
+                transform: translate(-120px, 20px) scale(0.6);
+                opacity: 0;
+            }
+            61% {
+                transform: translate(0, 0) scale(0.5);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+        }
+
         /* Book a Call CTA Section */
         .book-call-cta {
             padding: 6rem 0;
@@ -1292,6 +1370,15 @@
                 <div class="package-card">
                     <span class="badge">Quick Start</span>
                     <h3>Install Your AI Agent</h3>
+
+                    <!-- Installation Animation -->
+                    <div class="install-animation">
+                        <div class="install-folder"></div>
+                        <div class="install-bot">
+                            <img src="openclaw.png" alt="OpenClaw Bot">
+                        </div>
+                    </div>
+
                     <div class="price">€149</div>
                     <div class="price-note">one-time payment</div>
 
