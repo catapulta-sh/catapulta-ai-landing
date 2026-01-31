@@ -422,12 +422,15 @@
             z-index: 1000;
             cursor: pointer;
             opacity: 0;
+            background: transparent;
+            -webkit-tap-highlight-color: transparent;
+            pointer-events: none;
             animation: clickzoneAppear 0.1s linear 2.8s forwards;
         }
 
         @keyframes clickzoneAppear {
             to {
-                opacity: 0.01;
+                pointer-events: auto;
             }
         }
 
@@ -1659,10 +1662,10 @@
             // Add hiding class
             botAvatar.classList.add('hiding');
 
-            // Remove hiding class after 3 seconds to bring it back
+            // Remove hiding class after 2 seconds to bring it back
             hideTimeout = setTimeout(() => {
                 botAvatar.classList.remove('hiding');
-            }, 3000);
+            }, 2000);
         }
 
         // Add click to the invisible clickzone
