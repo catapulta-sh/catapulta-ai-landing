@@ -106,18 +106,16 @@
 
         /* GitHub-style contribution grid */
         .contribution-grid {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            margin-top: 2rem;
+            position: relative;
             z-index: 5;
             display: grid;
             grid-template-columns: repeat(auto-fit, 14px);
             gap: 4px;
             padding: 0.5rem;
             max-width: 90%;
+            margin: 0 auto 4rem auto;
             justify-content: center;
+            height: 150px;
         }
 
         .contribution-box {
@@ -168,6 +166,8 @@
                 grid-template-columns: repeat(auto-fit, 12px);
                 gap: 3px;
                 padding: 0.5rem;
+                height: 120px;
+                margin-bottom: 3rem;
             }
 
             .contribution-box {
@@ -181,6 +181,8 @@
                 grid-template-columns: repeat(auto-fit, 10px);
                 gap: 2px;
                 padding: 0.5rem;
+                height: 100px;
+                margin-bottom: 2rem;
             }
 
             .contribution-box {
@@ -270,11 +272,10 @@
 
         /* Hero section */
         .hero {
-            padding: 6rem 0 8rem;
+            padding: 6rem 0 2rem;
             text-align: center;
             animation: fadeInUp 1s var(--ease-smooth) 0.2s backwards;
             position: relative;
-            min-height: 400px;
         }
 
         @keyframes fadeInUp {
@@ -321,7 +322,7 @@
 
         /* Chat Animation Section */
         .chat-demo {
-            padding: 4rem 0 2rem;
+            padding: 8rem 0 2rem;
             max-width: 600px;
             margin: 0 auto;
             animation: fadeInUp 1s var(--ease-smooth) 0.6s backwards;
@@ -977,11 +978,11 @@
     <main>
         <!-- Hero section -->
         <section class="hero">
-            <div class="contribution-grid" id="contributionGrid"></div>
             <h1>Launch Your AI Agent</h1>
             <p class="subtitle">
                 Your intelligent automation partner, ready in minutes.
             </p>
+            <div class="contribution-grid" id="contributionGrid"></div>
             <p class="description">
                 Unlock the power of open-source AI agents. Automate tasks, streamline workflows, and bring business intelligence directly into your favorite chat platforms — no coding required.
             </p>
@@ -1128,7 +1129,8 @@
                         <li>Complete installation and setup of OpenClaw AI Agent - we handle everything and guide you</li>
                         <li>No coding required, ready to use immediately</li>
                         <li>Connect to WhatsApp, Telegram, or Slack</li>
-                        <li>Automate tasks and streamline your workflow</li>
+                        <li>Once ready, you own it and take full control</li>
+                        <li>One workflow included</li>
                         <li>3 months of dedicated support included</li>
                     </ul>
 
@@ -1139,7 +1141,7 @@
 
                 <!-- Package 2: Custom Integration -->
                 <div class="package-card premium">
-                    <span class="badge">Enterprise</span>
+                    <span class="badge">Get an expert now</span>
                     <h3>Custom Integration</h3>
                     <div class="price">€499+</div>
                     <div class="price-note">starting from</div>
@@ -1188,6 +1190,13 @@
                 </div>
 
                 <div class="faq-item">
+                    <h3>How is the process of installing an AI agent?</h3>
+                    <p>
+                        First you purchase your package, and then we will reach out by email or call to know what parts of your business you want to integrate with the AI Agent. We will ask you the preferred way to chat with your AI Agent: WhatsApp, Telegram, Slack or any other messaging app. Each setup lives in an isolated environment and we can use privacy-first LLM models so you can rest assured that your data remains yours. Depending on the LLM model there could be usage charges.
+                    </p>
+                </div>
+
+                <div class="faq-item">
                     <h3>How can I automate my business?</h3>
                     <p>
                         The possibilities are nearly endless! Our AI agents excel at automating workflows across various industries:
@@ -1206,6 +1215,13 @@
                         just like you would with a colleague. However, please note that voice features incur additional charges
                         based on usage (minutes of voice processing). We'll provide transparent pricing details when setting up
                         voice capabilities for your specific use case.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I install OpenClaw for free?</h3>
+                    <p>
+                        <strong>Yes</strong>, if you are a tinkerer and tech savvy you can go to the OpenClaw GitHub repository and install it, but you need to know about API keys, SDK configurations and there is no free support. You also need to host the AI Agent and we don't recommend installing it in your personal computer without sandboxing, due to it could expose your personal data, loss access to your email or YouTube accounts or even get fraudulent access to your business or self-custody hot wallets.
                     </p>
                 </div>
             </div>
