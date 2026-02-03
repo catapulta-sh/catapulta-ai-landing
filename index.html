@@ -879,20 +879,60 @@
         }
 
         .install-bot {
-            width: 50px;
-            height: 50px;
+            width: 66px;
+            height: 66px;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 5px;
+            right: -80px;
             background: linear-gradient(135deg, #f0fdf6 0%, #e8fcf3 100%);
-            border-radius: 12px;
-            padding: 8px;
+            border-radius: 14px;
+            padding: 11px;
             box-shadow:
                 0 1px 2px rgba(0, 0, 0, 0.1),
                 0 4px 12px rgba(16, 185, 129, 0.25),
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            position: relative;
+            animation: botSlideIn 2.5s var(--ease-bounce) infinite;
             overflow: hidden;
+        }
+
+        .install-bot.static {
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            right: auto;
+            transform: translate(-50%, -50%);
+            animation: none;
+            border-radius: 12px;
+            padding: 8px;
+        }
+
+        @keyframes botSlideIn {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(-157px, 0px) scale(0.8);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-157px, 0px) scale(0.6);
+                opacity: 0.3;
+            }
+            60% {
+                transform: translate(-157px, 0px) scale(0.6);
+                opacity: 0;
+            }
+            61% {
+                transform: translate(0, 0) scale(0.5);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
         }
 
         .install-bot::before {
@@ -1678,7 +1718,6 @@
                         <li>Connect to WhatsApp, Telegram, or Slack</li>
                         <li>You own it and maintain full control</li>
                         <li>No vendor locking, open source software you can build on top</li>
-                        <li>1 month of support included</li>
                     </ul>
 
                     <a href="https://buy.stripe.com/00wdR8anl8Sqeij7FxaZi07" target="_blank" rel="noopener noreferrer" class="card-cta" style="display: block; text-decoration: none; text-align: center;">
@@ -1701,7 +1740,7 @@
                         <!-- Installation Animation -->
                         <div class="install-animation">
                             <div class="install-folder"></div>
-                            <div class="install-bot">
+                            <div class="install-bot static">
                                 <img src="openclaw.png" alt="OpenClaw Bot">
                             </div>
                         </div>
